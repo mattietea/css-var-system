@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 
-import { bg, fontColor, fontFamily, ml, mr, mt } from './create-prop';
+import bgProps, { BgGroupProps } from './groups/bg-props';
+import fontProps, { FontGroupProps } from './groups/font-props';
+import sizeProps, { SizeGroupProps } from './groups/size-props';
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -13,12 +15,20 @@ const GlobalStyle = createGlobalStyle`
     --color-light: #fff;
     --color-dark: #1e272e;
 
-    --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-
     --space-scale: 4px;
-    --font-size-scale: 4px;
     --radii-scale: 2px;
-  }
+
+    --font-size-h1: 36px;
+    --font-size-h2: 28px;
+    --font-size-h3: 20px;
+    --font-size-h4: 11px;
+    --font-size-b1: 18px;
+    --font-size-b2: 15px;
+    --font-size-b3: 13px;
+    --font-size-tiny: 11px;
+
+    --font-family-sans: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
 
   * {
     margin: 0;
@@ -26,51 +36,50 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-interface BoxProps {
-  bg?: string;
-  fontColor?: string;
-  fontFamily?: string;
-  ml?: number | string;
-  mr?: number | string;
-  mt?: number | string;
-}
+interface BoxProps extends FontGroupProps, SizeGroupProps, BgGroupProps {}
 
 const Box = styled('div')<BoxProps>`
-  ${bg}
-  ${fontColor}
-  ${fontFamily}
-  ${ml}
-  ${mr}
-  ${mt}
+  --box-size: 200px;
+
+  display: inline-block;
+  height: var(--box-size);
+  width: var(--box-size);;
+  ${fontProps}
+  ${sizeProps}
+  ${bgProps}
 `;
 
 Box.defaultProps = {
-  bg: 'primary',
+  fontColor: 'dark',
   fontFamily: 'sans',
 };
 
-const Button = styled(Box)`
-  height: 200px;
-  width: 200px;
-`;
+const Button = styled(Box)``;
 
 const App = () => {
   return (
     <>
       <GlobalStyle />
-      <Box bg="danger">
+      <Box
+        p={5}
+        mt="calc(50vh - var(--box-size))"
+        ml="calc(50vw - 100px)"
+        bg="success"
+      >
         <Button
-          fontColor="light"
-          mt="calc(50vh - 100px)"
-          mr="auto"
-          ml="auto"
-          bg="success"
+          bg="primary"
+          fontSize="h1"
+          fontStyle="oblique"
+          fontColor="secondary"
+          fontWeight="bold"
         >
-          My Box
+          Hello
         </Button>
       </Box>
     </>
   );
 };
+
+const hi = sizeProps;
 
 ReactDOM.render(<App />, document.getElementById('root'));

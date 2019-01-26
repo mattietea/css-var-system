@@ -1,7 +1,9 @@
 {
   "extends": ["@divido/tslint-config"],
   "rules": {
-    "object-literal-sort-keys": true,
+    "object-literal-sort-keys": {
+      "options": "match-declaration-order"
+    },
     "arrow-return-shorthand": true
   }
 }
